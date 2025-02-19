@@ -1,7 +1,10 @@
 import {NextRequest, NextResponse} from "next/server";
 import { z } from "zod";
 import { PrismaClient } from '@prisma/client';
-
+/*
+ updated to include updatedAt and createdAt fields
+ Postman request test: double quotes around title and description fields "title":"title" "description":"description"
+*/
 const prisma = new PrismaClient();
 const createIssueSchema
     = z.object({
