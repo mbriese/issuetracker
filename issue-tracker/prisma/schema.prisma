@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model issue {
+  id          Int          @id @default(autoincrement())
+  title       String       @db.VarChar(255)
+  description String       @db.Text
+  status      issue_status @default(OPEN)
+  updatedAt   DateTime     @default(now())
+  createdAt   DateTime     @default(now())
+}
+
+enum issue_status {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
