@@ -16,7 +16,7 @@ const NewIssuePage = () => {
     const router = useRouter();
     const {register, control, handleSubmit} = useForm<IssueForm>();
     const [error, setError] = useState('');
-    // @ts-ignore
+    // @ts-ignore - added Callout
     return (
         <div className="max-w-xl space-y-3">
             {error &&
