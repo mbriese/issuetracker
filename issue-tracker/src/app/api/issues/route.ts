@@ -1,24 +1,17 @@
 import {NextRequest, NextResponse} from "next/server";
-import { z } from "zod";
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
+import {createIssueSchema} from "@/app/validationSchemas";
 /*
  updated to include updatedAt and createdAt fields
  Postman request test: double quotes around title and description fields "title":"title" "description":"description"
 */
 const prisma = new PrismaClient();
-const createIssueSchema
-    = z.object({
-    title: z.string().min(1).max(255),
-    description: z.string().min(1),
-    updatedAt: z.date().optional(),
-    createdAt: z.date().optional(),
-});
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const validation = createIssueSchema.safeParse(body);
     if (!validation.success) {
-        return NextResponse.json(validation.error.errors, {status: 400});
+        return NextResponse.json(validation.error.format(), {status: 400});
     }
 
     const {title, description } = validation.data;
